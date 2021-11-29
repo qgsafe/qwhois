@@ -13,7 +13,7 @@ import socket
 from future import standard_library
 from builtins import *
 from netaddr.ip import *
-from .whois import NICClient
+from whois import NICClient
 
 standard_library.install_aliases()
 suffixes = None
@@ -154,4 +154,4 @@ if __name__ == '__main__':
     except IndexError:
         print('Usage: %s url' % sys.argv[0])
     else:
-        print(whois(url, timeout=30))
+        print(whois(url, True, timeout=30))
