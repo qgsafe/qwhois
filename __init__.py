@@ -13,7 +13,6 @@ import socket
 from future import standard_library
 from builtins import *
 from netaddr.ip import *
-from .parser import WhoisEntry
 from .whois import NICClient
 
 standard_library.install_aliases()
