@@ -1,4 +1,4 @@
-from whois import whois
+from qwhois import whois
 import sys
 
 if __name__ == '__main__':

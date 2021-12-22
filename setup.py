@@ -12,6 +12,7 @@ setuptools.setup(
     auth_email="yuan13036395508@gmail.com",
     descrition="whois lookup >>> 查询域名的whois信息",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/cqqgsafe/qwhois",
     packages=setuptools.find_packages(),
     classifiers=[
@@ -20,4 +21,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    install_requires=['future', 'netaddr']
 )
