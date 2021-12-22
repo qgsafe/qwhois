@@ -13,20 +13,47 @@ import socket
 from future import standard_library
 from builtins import *
 from netaddr.ip import *
-from whois import NICClient
+from whois.whois import NICClient
 
 standard_library.install_aliases()
 suffixes = None
 
 
+def _is_ip(url):
+    """
+    判断是否为ip.
+    """
+    try:
+        IPAddress(url)
+        return True
+    except:
+        return False
+
+
+# 判断是否全是ASCII码
+def _is_ascii(value):
+    """
+    判断是否为ascii码
+    """
+    for c in value:
+        if ord(c) > 0x7f:
+            return False
+    return True
+
+
 def whois(url, command=False, flags=0, timeout=10):
-    # 获取域名
-    print("url: ", url)
-    if is_ip(url):
+    """
+    获取whois信息.
+    url: 域名/IP/链接
+    command: 是否调用命令行
+    flags: 查询whois的资源
+    timeout: 超时查询
+    """
+    # 判断域名是否为ip.
+    if _is_ip(url):
         result = socket.gethostbyaddr(url)
         url = result[0]
     domain = extract_domain(url)
-    print("domain: ", domain)
 
     if command:
         # try native whois command
@@ -36,8 +63,6 @@ def whois(url, command=False, flags=0, timeout=10):
         # try builtin client
         nic_client = NICClient()
         text = nic_client.whois_lookup(domain, flags, timeout)
-    # open("whois/" + domain, 'w').write(text)
-    # print(text)
 
     return text
 
@@ -73,7 +98,7 @@ def extract_domain(url):
     global suffixes
     if not suffixes:
         # downloaded from https://publicsuffix.org/list/public_suffix_list.dat
-        tlds_path = os.path.join(os.getcwd(), os.path.dirname(__file__), 'data', 'public_suffix_list.dat')
+        tlds_path = os.path.join(os.getcwd(), os.path.dirname(__file__), '../data', 'public_suffix_list.dat')
         with open(tlds_path, encoding='utf-8') as tlds_fp:
             suffixes = set(
                 line.encode('utf-8') for line in tlds_fp.read().splitlines() if line and not line.startswith('//')
@@ -101,12 +126,16 @@ def extract_domain(url):
 
 # 域名编码
 def to_punycode(url):
+    """
+    将url或域名转换为punycode码
+    url: 域名或者链接.
+    """
     domain = b''
     for section in reversed(url.split('.')):
         if domain:
             domain = b'.' + domain
 
-        if not is_ascii(section):
+        if not _is_ascii(section):
             section = b'xn--' + section.encode('punycode')
         else:
             section = section.encode('utf-8')
@@ -115,8 +144,11 @@ def to_punycode(url):
     return domain.decode('utf-8')
 
 
-# punycode编码转回utf8
 def to_utf8(url):
+    """
+    将punycode码转为utf8格式的字符串
+    url 连接地址
+    """
     domain = b''
     for section in reversed(url.split('.')):
         if domain:
@@ -129,29 +161,3 @@ def to_utf8(url):
         domain = section + domain
 
     return domain.decode('utf-8')
-
-
-# 判断ip
-def is_ip(url):
-    try:
-        IPAddress(url)
-        return True
-    except:
-        return False
-
-
-# 判断是否全是ASCII码
-def is_ascii(value):
-    for c in value:
-        if ord(c) > 0x7f:
-            return False
-    return True
-
-
-if __name__ == '__main__':
-    try:
-        url = sys.argv[1]
-    except IndexError:
-        print('Usage: %s url' % sys.argv[0])
-    else:
-        print(whois(url, True, timeout=30))

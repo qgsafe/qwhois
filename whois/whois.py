@@ -87,7 +87,7 @@ class NICClient(object):
     def choose_server(domain):
         # load whois server map
         if not NICClient.WHOIS_SERVER_MAP:
-            server_path = os.path.join(os.getcwd(), os.path.dirname(__file__), 'data', 'whois_server.map')
+            server_path = os.path.join(os.getcwd(), os.path.dirname(__file__), '../data', 'whois_server.map')
             with open(server_path, encoding='utf-8') as tlds_fp:
                 NICClient.WHOIS_SERVER_MAP = json.loads(tlds_fp.read())
 
@@ -112,7 +112,6 @@ class NICClient(object):
     @staticmethod
     def split_host(host):
         hosts = host.split(':')
-        print("split: ", hosts)
         if len(hosts) >= 2:
             NICClient.WHOIS_SERVER_PORT = hosts[-1]
             return hosts[-2]
@@ -153,15 +152,12 @@ class NICClient(object):
                 response += self.whois(domain, host, 0, port=port, timeout=timeout)
         except socket.error as exc:
             response = "Error: trying to connect to socket: " + repr(exc)
-            print(response)
             s.close()
         return response
 
     def whois_lookup(self, domain, flags, timeout):
         NICClient.WHOIS_SERVER_PORT = 43
         host = NICClient.choose_server(domain)
-        print("host: ", host)
-        print("port: ", NICClient.WHOIS_SERVER_PORT, "\n====================\n")
         if host is not None:
             result = self.whois(domain, host, flags, port=NICClient.WHOIS_SERVER_PORT, timeout=timeout)
         else:
