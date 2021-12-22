@@ -5,3 +5,7 @@
 __pycache__
 /*/__pycache__
 /*/*/__pycache__
+# 忽略打包文件
+qwhois.egg-info
+dist
+build
