@@ -9,7 +9,7 @@ setuptools.setup(
     # 扩展包名
     name="qwhois",
     # 版本.
-    version="0.0.3",
+    version="1.0.0",
     # 作者
     author="adolph",
     # 作者邮箱
