@@ -12,7 +12,7 @@ setuptools.setup(
     auth_email="yuan13036395508@gmail.com",
     descrition="whois lookup >>> 查询域名的whois信息",
     long_description=long_description,
-    url="https://github.com/cqqgsafe/whois",
+    url="https://github.com/cqqgsafe/qwhois",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
