@@ -9,7 +9,7 @@ setuptools.setup(
     # 扩展包名
     name="qwhois",
     # 版本.
-    version="1.0.0",
+    version="1.0.1",
     # 作者
     author="adolph",
     # 作者邮箱
@@ -21,7 +21,7 @@ setuptools.setup(
     # 描述文件格式
     long_description_content_type="text/markdown",
     # 指定对应的git仓库地址
-    url="https://github.com/cqqgsafe/qwhois",
+    url="https://github.com/qgsafe/qwhois",
     # 指定包
     packages=setuptools.find_packages(),
     # 指定语言. 指定开源协议
