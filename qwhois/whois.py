@@ -87,7 +87,7 @@ class NICClient(object):
     def choose_server(domain):
         # load whois server map
         if not NICClient.WHOIS_SERVER_MAP:
-            server_path = os.path.join(os.getcwd(), os.path.dirname(__file__), '../data', 'whois_server.map')
+            server_path = os.path.join(os.getcwd(), os.path.dirname(__file__), 'data', 'whois_server.map')
             with open(server_path, encoding='utf-8') as tlds_fp:
                 NICClient.WHOIS_SERVER_MAP = json.loads(tlds_fp.read())
 

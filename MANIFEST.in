@@ -1,0 +1,2 @@
+include qwhois/data/public_suffix_list.dat
+include qwhois/data/whois_server.map

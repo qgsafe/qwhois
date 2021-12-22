@@ -4,16 +4,15 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from __future__ import division
-
-import re
-import sys
-import os
-import subprocess
-import socket
 from future import standard_library
 from builtins import *
 from netaddr.ip import *
-from whois.whois import NICClient
+from qwhois.whois import NICClient
+
+import re
+import os
+import subprocess
+import socket
 
 standard_library.install_aliases()
 suffixes = None
@@ -98,7 +97,7 @@ def extract_domain(url):
     global suffixes
     if not suffixes:
         # downloaded from https://publicsuffix.org/list/public_suffix_list.dat
-        tlds_path = os.path.join(os.getcwd(), os.path.dirname(__file__), '../data', 'public_suffix_list.dat')
+        tlds_path = os.path.join(os.getcwd(), os.path.dirname(__file__), 'data', 'public_suffix_list.dat')
         with open(tlds_path, encoding='utf-8') as tlds_fp:
             suffixes = set(
                 line.encode('utf-8') for line in tlds_fp.read().splitlines() if line and not line.startswith('//')
